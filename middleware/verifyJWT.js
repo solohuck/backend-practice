@@ -1,19 +1,19 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 // middleware should have a request, response, and next.
 const verifyJWT = (req, res, next) => {
   // define the auth header
-  const authHeader = req.headers['authorization'];
-  // Check if the auth header has been recieved 
+  const authHeader = req.headers["authorization"];
+  // Check if the auth header has been recieved
   if (!authHeader) return res.sendStatus(401);
   // log the auth header
   console.log(authHeader); // Bearer Token
-  // define the token and grab it from the auth header 
-  const token = authHeader.split(' ')[1];
+  // define the token and grab it from the auth header
+  const token = authHeader.split(" ")[1];
   // verify the token
   jwt.verify(
-    // pass in the token first 
+    // pass in the token first
     token,
     // pull in the access token secret that will be used to verify with this middleware
     process.env.ACCESS_TOKEN_SECRET,
@@ -24,10 +24,9 @@ const verifyJWT = (req, res, next) => {
       // The username was passed into the JWT and that has now been decoded so it can be read now
       // set the user equal to decoded.username
       req.user = decoded.username;
-      next()
+      next();
     }
-  )
+  );
+};
 
-}
-
-module.exports = verifyJWT
+module.exports = verifyJWT;

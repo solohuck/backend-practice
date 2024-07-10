@@ -6,6 +6,8 @@ const corsOptions = require("./config/corsOptions");
 const app = express();
 const { logger } = require("./middleware/logEvents");
 const errorhandler = require("./middleware/errorHandler");
+const verifyJWT = require("./middleware/verifyJWT");
+const cookieParser = require("cookie-parser");
 
 // Setting the port number, either from environment variables or default to 3500
 const PORT = process.env.PORT || 3500;
@@ -22,6 +24,9 @@ app.use(express.urlencoded({ extended: false }));
 // Built-in middleware for json
 app.use(express.json());
 
+// Middleware for cookies
+app.use(cookieParser());
+
 // Built-in middleware to serve static files
 app.use("/", express.static(path.join(__dirname, "/public")));
 
@@ -29,6 +34,11 @@ app.use("/", express.static(path.join(__dirname, "/public")));
 app.use("/", require("./routes/root"));
 app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
+// This needs to be before the verifyJWT BECAUSE that is what checks the access token
+app.use("/refresh", require("./routes/refresh"));
+
+// This works like a waterfall. Everything after this line will use the JWT middleware
+app.use(verifyJWT);
 app.use("/employees", require("./routes/api/employees"));
 
 // app.all is more for routing and will apply to all http methods at once
