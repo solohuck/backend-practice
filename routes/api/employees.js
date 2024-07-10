@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const employeesController = require("../../controllers/employeesController");
+// import middleware
+const verifyJWT = require('../../middleware/verifyJWT');
 
 router
   .route("/")
-  .get(employeesController.getAllEmployees)
+  // It will go through the middleware first 'verifyJWT' and then go to the employeesController
+  .get(verifyJWT, employeesController.getAllEmployees)
   .post(employeesController.createNewEmployee)
   .put(employeesController.updateEmployee)
   .delete(employeesController.deleteEmployee);
