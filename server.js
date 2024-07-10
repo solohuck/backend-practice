@@ -1,99 +1,50 @@
-const http = require('http');
-const path = require('path');
-const fs = require('fs');
-const fsPromises = require('fs').promises;
+// Importing core modules
+const path = require("path"); // Module for handling and transforming file paths
+const express = require("express");
+const cors = require("cors");
+const corsOptions = require("./config/corsOptions");
+const app = express();
+const { logger } = require("./middleware/logEvents");
+const errorhandler = require("./middleware/errorHandler");
 
-const logEvents = require('./logEvents');
-const EventEmitter = require('events');
-class Emitter extends EventEmitter { };
-// initialize object 
-const myEmitter = new Emitter();
-myEmitter.on('log', (msg, fileName) => logEvents(msg, fileName));
+// Setting the port number, either from environment variables or default to 3500
 const PORT = process.env.PORT || 3500;
 
-const serveFile = async (filePath, contentType, response) => {
-    try {
-        const rawData = await fsPromises.readFile(
-            filePath,
-            !contentType.includes('image') ? 'utf8' : ''
-        );
-        const data = contentType === 'application/json'
-            ? JSON.parse(rawData) : rawData;
-        response.writeHead(
-            filePath.includes('404.html') ? 404 : 200,
-            { 'Content-Type': contentType }
-        );
-        response.end(
-            contentType === 'application/json' ? JSON.stringify(data) : data
-        );
-    } catch (err) {
-        console.log(err);
-        myEmitter.emit('log', `${err.name}: ${err.message}`, 'errLog.txt');
-        response.statusCode = 500;
-        response.end();
-    }
-}
+// Custom middleware logger
+app.use(logger);
 
-const server = http.createServer((req, res) => {
-    console.log(req.url, req.method);
-    myEmitter.emit('log', `${req.url}\t${req.method}`, 'reqLog.txt');
+// Cross origin resource sharing
+app.use(cors(corsOptions));
 
-    const extension = path.extname(req.url);
+// Built-in middleware to handle urlendocded data (form data)
+app.use(express.urlencoded({ extended: false }));
 
-    let contentType;
+// Built-in middleware for json
+app.use(express.json());
 
-    switch (extension) {
-        case '.css':
-            contentType = 'text/css';
-            break;
-        case '.js':
-            contentType = 'text/javascript';
-            break;
-        case '.json':
-            contentType = 'application/json';
-            break;
-        case '.jpg':
-            contentType = 'image/jpeg';
-            break;
-        case '.png':
-            contentType = 'image/png';
-            break;
-        case '.txt':
-            contentType = 'text/plain';
-            break;
-        default:
-            contentType = 'text/html';
-    }
+// Built-in middleware to serve static files
+app.use("/", express.static(path.join(__dirname, "/public")));
 
-    let filePath =
-        contentType === 'text/html' && req.url === '/'
-            ? path.join(__dirname, 'views', 'index.html')
-            : contentType === 'text/html' && req.url.slice(-1) === '/'
-                ? path.join(__dirname, 'views', req.url, 'index.html')
-                : contentType === 'text/html'
-                    ? path.join(__dirname, 'views', req.url)
-                    : path.join(__dirname, req.url);
+// routes
+app.use("/", require("./routes/root"));
+app.use("/register", require("./routes/register"));
+app.use("/auth", require("./routes/auth"));
+app.use("/employees", require("./routes/api/employees"));
 
-    // makes .html extension not required in the browser
-    if (!extension && req.url.slice(-1) !== '/') filePath += '.html';
-
-    const fileExists = fs.existsSync(filePath);
-
-    if (fileExists) {
-        serveFile(filePath, contentType, res);
-    } else {
-        switch (path.parse(filePath).base) {
-            case 'old-page.html':
-                res.writeHead(301, { 'Location': '/new-page.html' });
-                res.end();
-                break;
-            case 'www-page.html':
-                res.writeHead(301, { 'Location': '/' });
-                res.end();
-                break;
-            default:
-                serveFile(path.join(__dirname, 'views', '404.html'), 'text/html', res);
-        }
-    }
+// app.all is more for routing and will apply to all http methods at once
+app.all("*", (req, res) => {
+  res.status(404);
+  if (req.accepts("html")) {
+    res.sendFile(path.join(__dirname, "views", "404.html"));
+  } else if (req.accepts("json")) {
+    res.json({ error: "404 Not Found" });
+  } else {
+    res.type("txt").send("404 Not Found");
+  }
 });
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Error handler middleware
+app.use(errorhandler);
+
+// Start the server and listen on the specified port
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

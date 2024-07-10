@@ -1,0 +1,9 @@
+
+20240709	11:28:02	7da9af0f-c417-42fb-99ee-cade8216c210	POST	undefined	/register
+20240709	11:28:39	5eed9b51-445f-4e66-b0d7-cf201f7ab86b	POST	undefined	/register
+20240709	13:51:46	b96f9f54-85da-45fb-8a0d-79f6e80d269d	GET	undefined	/auth
+20240709	14:02:24	b7f44bae-c5c1-46b3-8496-217106add059	POST	undefined	/auth
+20240709	14:02:38	8f245bb5-b7f1-4dd1-9999-22e96228e79b	POST	undefined	/register
+20240709	14:02:45	fa18c183-5bab-4f3a-a9c2-f6b80db9b0b3	POST	undefined	/auth
+20240709	16:55:37	9d3b12f9-bc53-4257-9776-9d67100c693a	GET	undefined	/
+20240709	16:55:37	ecb99c27-33c9-4ecf-8500-d4035fe4a9c3	GET	undefined	/css/style.css
