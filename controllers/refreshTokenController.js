@@ -9,7 +9,6 @@ const usersDB = {
 };
 
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 
 // No async just request and response
 const handleRefreshToken = (req, res) => {

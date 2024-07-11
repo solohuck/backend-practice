@@ -11,7 +11,6 @@ const usersDB = {
 const bcrypt = require("bcrypt");
 
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 const fsPromises = require("fs").promises;
 const path = require("path");
 
@@ -27,18 +26,18 @@ const handleLogin = async (req, res) => {
   // Evaluate password
   const match = await bcrypt.compare(pwd, foundUser.password);
   if (match) {
-    // Grab the roles we put in the users json file 
+    // Grab the roles we put in the users json file
     const roles = Object.values(foundUser.roles);
 
     // Define the accessToken
     // Use the username object as a payload
     const accessToken = jwt.sign(
-      { 
+      {
         UserInfo: {
           username: foundUser.username,
-                      roles: roles
-      }
-    },
+          roles: roles,
+        },
+      },
       // add the access secret
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30s" }

@@ -1,4 +1,5 @@
 // Importing core modules
+require("dotenv").config();
 const path = require("path"); // Module for handling and transforming file paths
 const express = require("express");
 const cors = require("cors");
@@ -8,10 +9,15 @@ const { logger } = require("./middleware/logEvents");
 const errorhandler = require("./middleware/errorHandler");
 const verifyJWT = require("./middleware/verifyJWT");
 const credentials = require("./middleware/credentials");
+const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const connectDB = require("./config/dbConn");
 
 // Setting the port number, either from environment variables or default to 3500
 const PORT = process.env.PORT || 3500;
+
+// Connect to MongoDB
+connectDB();
 
 // Custom middleware logger
 app.use(logger);
@@ -62,5 +68,9 @@ app.all("*", (req, res) => {
 // Error handler middleware
 app.use(errorhandler);
 
-// Start the server and listen on the specified port
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// We will only listen for request if we have successfully connected to MongoDB
+mongoose.connection.once("open", () => {
+  console.log("Connected to MongoDB");
+  // Start the server and listen on the specified port
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});

@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 
 // middleware should have a request, response, and next.
 const verifyJWT = (req, res, next) => {
