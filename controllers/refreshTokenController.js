@@ -43,10 +43,18 @@ const handleRefreshToken = (req, res) => {
       // IF there is an error or the username does not equal the decoded username
       if (err || foundUser.username !== decoded.username)
         return res.sendStatus(403);
+      // Define roles. Pass in the found user and the roles associated with that user
+      const roles = Object.values(foundUser.roles)
       // Create a new access token to send because the refresh token has been verified
       const accessToken = jwt.sign(
         // Access token will have a username. The same username that was verified before
-        { username: decoded.username },
+        { 
+          UserInfo: {
+            username: decoded.username,
+            roles: roles
+          }
+        },
+        
         // Validate the access token with the secret
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "30s" }

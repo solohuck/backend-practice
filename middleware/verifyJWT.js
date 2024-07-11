@@ -4,11 +4,9 @@ require("dotenv").config();
 // middleware should have a request, response, and next.
 const verifyJWT = (req, res, next) => {
   // define the auth header
-  const authHeader = req.headers["authorization"];
-  // Check if the auth header has been recieved
-  if (!authHeader) return res.sendStatus(401);
-  // log the auth header
-  console.log(authHeader); // Bearer Token
+  const authHeader = req.headers.authorization || req.headers.Authorization;
+  // Check if the auth header has been recieved THEN check if it starts with Bearer
+  if (!authHeader?.startsWith("Bearer ")) return res.sendStatus(401);
   // define the token and grab it from the auth header
   const token = authHeader.split(" ")[1];
   // verify the token
@@ -23,7 +21,8 @@ const verifyJWT = (req, res, next) => {
       if (err) return res.sendStatus(403); // invalid token
       // The username was passed into the JWT and that has now been decoded so it can be read now
       // set the user equal to decoded.username
-      req.user = decoded.username;
+      req.user = decoded.UserInfo.username;
+      req.roles = decoded.UserInfo.roles;
       next();
     }
   );
