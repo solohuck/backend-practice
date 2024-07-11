@@ -7,6 +7,7 @@ const app = express();
 const { logger } = require("./middleware/logEvents");
 const errorhandler = require("./middleware/errorHandler");
 const verifyJWT = require("./middleware/verifyJWT");
+const credentials = require("./middleware/credentials");
 const cookieParser = require("cookie-parser");
 
 // Setting the port number, either from environment variables or default to 3500
@@ -14,6 +15,10 @@ const PORT = process.env.PORT || 3500;
 
 // Custom middleware logger
 app.use(logger);
+
+// Handle options credentials check - before CORS
+// and fetch cookies credentials requirement
+app.use(credentials);
 
 // Cross origin resource sharing
 app.use(cors(corsOptions));
@@ -36,6 +41,7 @@ app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
 // This needs to be before the verifyJWT BECAUSE that is what checks the access token
 app.use("/refresh", require("./routes/refresh"));
+app.use("/logout", require("./routes/logout"));
 
 // This works like a waterfall. Everything after this line will use the JWT middleware
 app.use(verifyJWT);

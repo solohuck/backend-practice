@@ -27,7 +27,9 @@ const handleLogin = async (req, res) => {
   // Evaluate password
   const match = await bcrypt.compare(pwd, foundUser.password);
   if (match) {
-    // TODO: Create JWT's //
+    const roles = Object.values(foundUser.roles);
+
+    
 
     // Define the accessToken
     // Use the username object as a payload
@@ -68,6 +70,8 @@ const handleLogin = async (req, res) => {
     // 'name of cookie', pass in refresh token, options: httpOnly is set to true, maxAge: 1 Day
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
+      sameSite: "None",
+      // secure: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
     // Store the accessToken in memory. Do not store in localStorage
