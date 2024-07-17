@@ -183,3 +183,17 @@
 20240711	10:51:23	c0dc3886-24aa-453a-96be-8035d6331550	GET	undefined	/employees
 20240711	10:52:30	34c6998e-5268-4866-bdfb-5eada09b75d6	POST	undefined	/auth
 20240711	10:52:43	e2ea7079-2484-4aff-b8be-9aec652d92de	DELETE	undefined	/employees
+20240711	16:20:27	eb9c7bf8-db69-4a6f-afc1-88b413c574f9	POST	undefined	/register
+20240711	16:21:26	08c249be-b316-4fa7-a5a7-e4a4d7d02379	POST	undefined	/register
+20240711	16:27:05	0117d004-6d36-4eff-9a5d-eea69c3ede94	POST	undefined	/auth
+20240711	16:50:53	b265d828-08cf-4c56-ab7c-3ed197f92711	POST	undefined	/auth
+20240711	16:51:00	4855f003-5a01-4a26-8f93-62e6199674b4	GET	undefined	/refresh
+20240711	16:51:04	8f60cc9f-44f9-4fda-b5ad-fdfd03e7576c	POST	undefined	/auth
+20240711	16:51:08	85d42a32-8b7d-40b5-995b-77fbda714fd9	GET	undefined	/refresh
+20240711	16:51:52	eb0ccc55-2399-4f85-bda1-e4ec13452bb0	POST	undefined	/auth
+20240711	16:52:04	487bdc6f-651d-42e3-be12-0f9b65b1c643	GET	undefined	/refresh
+20240711	16:52:06	5d96fc04-4c17-4ed8-8b11-a019926c1982	GET	undefined	/refresh
+20240711	16:53:03	cb2afc8b-0bd6-4d10-a144-72516a23466e	POST	undefined	/auth
+20240711	16:53:07	2be4f08b-e8b9-4574-99ef-ef64c9affe52	GET	undefined	/refresh
+20240711	16:53:09	aeb7164a-00de-4ff6-97c9-e97d7ad9eb47	GET	undefined	/refresh
+20240711	16:53:14	d12fe686-dfb4-4dd3-a166-9d13c35d0c21	GET	undefined	/refresh

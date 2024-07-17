@@ -1,17 +1,8 @@
-// Simulates our users database table
-const usersDB = {
-  // This will be the users
-  users: require("../model/users.json"),
-  // This is how to set the users. Similar to using state
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
-
+const User = require("../model/User");
 const jwt = require("jsonwebtoken");
 
 // No async just request and response
-const handleRefreshToken = (req, res) => {
+const handleRefreshToken = async (req, res) => {
   // We will be looking for a cookie so define cookies with the req.cookies
   const cookies = req.cookies;
   // Make sure we have cookies. Use optional chaining "?."
@@ -24,9 +15,8 @@ const handleRefreshToken = (req, res) => {
   const refreshToken = cookies.jwt;
 
   // We do want to find a user BUT we are now looking for a refreshToken attached to that user
-  const foundUser = usersDB.users.find(
-    (person) => person.refreshToken === refreshToken
-  );
+  const foundUser = await User.findOne({ refreshToken }).exec();
+
   // IF no user found return a 403
   if (!foundUser) return res.sendStatus(403); // Forbidden
 
@@ -43,17 +33,18 @@ const handleRefreshToken = (req, res) => {
       if (err || foundUser.username !== decoded.username)
         return res.sendStatus(403);
       // Define roles. Pass in the found user and the roles associated with that user
-      const roles = Object.values(foundUser.roles)
+      const roles = Object.values(foundUser.roles);
       // Create a new access token to send because the refresh token has been verified
       const accessToken = jwt.sign(
         // Access token will have a username. The same username that was verified before
-        { 
+
+        {
           UserInfo: {
             username: decoded.username,
-            roles: roles
-          }
+            roles: roles,
+          },
         },
-        
+
         // Validate the access token with the secret
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "30s" }
