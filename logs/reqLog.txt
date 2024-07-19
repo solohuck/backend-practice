@@ -31,3 +31,12 @@
 20240719	12:19:25	5b8487a4-4e7a-4910-ab25-0cc197690d98	GET	undefined	/refresh
 20240719	12:19:28	d176c4c4-309a-430d-be1e-eb0d13638757	POST	undefined	/auth
 20240719	12:19:30	53b82dca-84cf-481a-b6a0-34ce5b86c015	GET	undefined	/refresh
+20240719	16:17:41	703cbda0-8620-41d6-b8a6-6bb2aad84b9b	POST	undefined	/register
+20240719	16:18:06	65da3cca-e45c-4a30-ab0f-2ba69e0938b4	POST	undefined	/auth
+20240719	16:19:07	937aaa70-8afe-468c-9ceb-527effbec866	GET	undefined	/refresh
+20240719	16:19:42	64dbfb3c-8d4c-44d1-98da-4177489f5a2e	GET	undefined	/getEmployee
+20240719	16:19:44	2399e865-3fc9-47cf-9900-1550b504a269	DELETE	undefined	/deleteEmployee
+20240719	16:19:46	3f7b7f09-78bf-4f23-9367-2433955d9aba	PUT	undefined	/updateEmployee
+20240719	16:19:50	4c124a8b-4b60-4994-a57f-d5f7773d8df1	POST	undefined	/createNewEmployee
+20240719	16:19:53	8a4146d8-3ce9-4f41-9eb6-800f1d18a482	GET	undefined	/getAllEmployees
+20240719	16:19:57	96e4fbd8-a826-4765-9223-331d06d2596e	GET	undefined	/logout
