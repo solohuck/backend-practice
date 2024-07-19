@@ -6,14 +6,10 @@ const connectDB = async () => {
     // async await. We need to bring in the db uri to connect to mongodb
     await mongoose.connect(
       process.env.DATABASE_URI,
-      // This is an object. Pass in options to prevent warnings from mongoDB otherwise
-      {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-      }
     );
   } catch (err) {
-    console.error(err);
+    console.error(err.message);
+    process.exit(1)
   }
 };
 

@@ -1,16 +1,4 @@
-// Simulates our users database table
-const usersDB = {
-  // This will be the users
-  users: require("../model/users.json"),
-  // This is how to set the users. Similar to using state
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
-
-// These are here to access the mock json database
-const fsPromises = require("fs").promises;
-const path = require("path");
+const User = require("../model/User");
 
 // No async just request and response
 const handleLogout = async (req, res) => {
@@ -27,9 +15,7 @@ const handleLogout = async (req, res) => {
   const refreshToken = cookies.jwt;
 
   // Is the refresh token in the database?
-  const foundUser = usersDB.users.find(
-    (person) => person.refreshToken === refreshToken
-  );
+  const foundUser = await User.findOne({ refreshToken }).exec();
 
   if (!foundUser) {
     // If we dont have a found user but do have a cookie at this point THEN clear the cookie
@@ -39,19 +25,9 @@ const handleLogout = async (req, res) => {
 
   // IF we reach this point THEN we have found a user with the refreshToken and need to DELETE it in the DB.
 
-  // OtherUSers is all other users that don't match the current foundUsers refreshToken
-  const otherUsers = usersDB.users.filter(
-    (person) => person.refreshToken !== foundUser.refreshToken
-  );
-  // The current user is being updated with a blank refreshToken
-  const currentUser = { ...foundUser, refreshToken: "" };
-  // Updating the users.json file
-  usersDB.setUsers([...otherUsers, currentUser]);
-  // Writing to the users.json file
-  await fsPromises.writeFile(
-    path.join(__dirname, "..", "model", "users.json"),
-    JSON.stringify(usersDB.users)
-  );
+  foundUser.refreshToken = "";
+  const result = await foundUser.save();
+  console.log(result);
 
   // Clearing the cookie
   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });

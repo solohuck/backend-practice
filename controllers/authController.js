@@ -1,18 +1,6 @@
-// Simulates our users database table
-const usersDB = {
-  // This will be the users
-  users: require("../model/users.json"),
-  // This is how to set the users. Similar to using state
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
-
+const User = require("../model/User");
 const bcrypt = require("bcrypt");
-
 const jwt = require("jsonwebtoken");
-const fsPromises = require("fs").promises;
-const path = require("path");
 
 const handleLogin = async (req, res) => {
   const { user, pwd } = req.body;
@@ -21,7 +9,7 @@ const handleLogin = async (req, res) => {
       .status(400)
       .json({ message: "Username and password are required" });
   // If it finds someone it will return that value and if not then it will be false or undefined
-  const foundUser = usersDB.users.find((person) => person.username === user);
+  const foundUser = await User.findOne({ username: user }).exec();
   if (!foundUser) return res.sendStatus(401); // Unauthorized
   // Evaluate password
   const match = await bcrypt.compare(pwd, foundUser.password);
@@ -51,23 +39,10 @@ const handleLogin = async (req, res) => {
     );
     // TODO: Save the refresh token to the database //
 
-    // Creates an array of the other users that are not logged in
-    // For each person that we have we will compare their username to the foundUser.username
-    const otherUsers = usersDB.users.filter(
-      (person) => person.username !== foundUser.username
-    );
-    // Add the refresh token to be saved to the current user
-    const currentUser = { ...foundUser, refreshToken };
-    // Sets all the users again after updating the DB
-    usersDB.setUsers([...otherUsers, currentUser]);
-    // Write the new users file
-    await fsPromises.writeFile(
-      // The file path we are writing to
-      path.join(__dirname, "..", "model", "users.json"),
-      // This will wirte the new users file
-      JSON.stringify(usersDB.users)
-    );
-    // Send both the access token and refresh token to the user
+    foundUser.refreshToken = refreshToken;
+    const result = await foundUser.save();
+
+    console.log(result);
 
     // Send as a httpOnly cookie. This is not available to javascript
     // 'name of cookie', pass in refresh token, options: httpOnly is set to true, maxAge: 1 Day

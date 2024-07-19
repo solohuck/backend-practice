@@ -1,1 +1,22 @@
-[{"username":"jon313","roles":{"User":2001},"password":"$2b$10$CUw.M1dnb0mXvQXhsD3diOJzf3AZanpSLjWOY.LvA776ucGr9vKvm"},{"username":"jon315","roles":{"User":2001},"password":"$2b$10$AhPQMHwcpld54P2cV2PGpObUmTiIWMWXhJlm7yTrssNM75Wi5594C","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvbjMxNSIsImlhdCI6MTcyMDcwOTE5MywiZXhwIjoxNzIwNzk1NTkzfQ.dxZ3XZ-LVNMcjnfxX7T2ZCNG0ueY_W9ysSXGErn6OMc"},{"username":"jon314","roles":{"User":2001,"Editor":1984},"password":"$2b$10$mFlXNNsHko8utB4LeCCAxuxuU.TkgCTnPaukevWOtcXJ4bOh3arxy","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvbjMxNCIsImlhdCI6MTcyMDcwOTI0NSwiZXhwIjoxNzIwNzk1NjQ1fQ.NZTmFOSt5m2UQd20HyPbmDUFZALmmVula-AM0Zl5m30"},{"username":"jon316","roles":{"User":2001,"Editor":1984,"Admin":5150},"password":"$2b$10$Bac1rOaFW/qjoxOOuSYbT.p.H7f5Cs5QjGVxBwsstXLDR/3xZWxy2","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvbjMxNiIsImlhdCI6MTcyMDczMTE4NCwiZXhwIjoxNzIwODE3NTg0fQ.UXqEC2vm6uk8DRTyu7LrS0c1hL0l8_Bt5BUvzcFVuvo"}]
+[
+    {
+        "username":"jon313",
+        "roles":{"User":2001},
+        "password":"$2b$10$CUw.M1dnb0mXvQXhsD3diOJzf3AZanpSLjWOY.LvA776ucGr9vKvm"
+    },
+
+    {
+        "username":"jon315",
+        "roles":{"User":2001},"password":"$2b$10$AhPQMHwcpld54P2cV2PGpObUmTiIWMWXhJlm7yTrssNM75Wi5594C","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvbjMxNSIsImlhdCI6MTcyMDcwOTE5MywiZXhwIjoxNzIwNzk1NTkzfQ.dxZ3XZ-LVNMcjnfxX7T2ZCNG0ueY_W9ysSXGErn6OMc"
+    },
+
+    {
+        "username":"jon314",
+        "roles":{"User":2001,"Editor":1984},"password":"$2b$10$mFlXNNsHko8utB4LeCCAxuxuU.TkgCTnPaukevWOtcXJ4bOh3arxy","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvbjMxNCIsImlhdCI6MTcyMDcwOTI0NSwiZXhwIjoxNzIwNzk1NjQ1fQ.NZTmFOSt5m2UQd20HyPbmDUFZALmmVula-AM0Zl5m30"
+    },
+
+    {
+        "username":"jon316",
+        "roles":{"User":2001,"Editor":1984,"Admin":5150},"password":"$2b$10$Bac1rOaFW/qjoxOOuSYbT.p.H7f5Cs5QjGVxBwsstXLDR/3xZWxy2","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvbjMxNiIsImlhdCI6MTcyMDczMTE4NCwiZXhwIjoxNzIwODE3NTg0fQ.UXqEC2vm6uk8DRTyu7LrS0c1hL0l8_Bt5BUvzcFVuvo"
+    }
+]
