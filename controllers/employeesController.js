@@ -1,8 +1,6 @@
-const { id } = require("date-fns/locale");
 const Employee = require("../model/Employee");
 
 // FUNCTIONS
-
 const getAllEmployees = async (req, res) => {
   // Define employees
   // Calling find() like this will return all of the employees
@@ -10,6 +8,7 @@ const getAllEmployees = async (req, res) => {
   // IF there are no employees THEN we will return, send a 204, and an error message
   if (!employees)
     return res.status(204).json({ message: "No employees found" });
+  res.json(employees);
 };
 
 const createNewEmployee = async (req, res) => {
@@ -64,7 +63,7 @@ const deleteEmployee = async (req, res) => {
     return res.status(400).json({ message: "ID parameter is required." });
   }
 
-  const employee = await Employee.findOne({ _id: id.body.req });
+  const employee = await Employee.findOne({ _id: id.body.req }).exec();
 
   // If the employee does not exist, return an error response
   if (!employee) {
@@ -79,7 +78,7 @@ const deleteEmployee = async (req, res) => {
 };
 
 const getEmployee = async (req, res) => {
-  // Find the employee by ID from the request body.
+  // Find the employee by ID from the request parameter in the URL.
   if (!req?.params?.id) {
     return res.status(400).json({ message: "ID parameter is required" });
   }
@@ -90,10 +89,10 @@ const getEmployee = async (req, res) => {
   if (!employee) {
     return res
       .status(400)
-      .json({ message: `Employee ID ${req.body.id} not found.` });
+      .json({ message: `Employee ID ${req.params.id} not found.` });
   }
-  // return a single employee data
-  res.sataus(200).json(employee);
+  // return a single employees data
+  res.status(200).json(employee);
 };
 
 module.exports = {

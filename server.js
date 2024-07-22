@@ -52,6 +52,8 @@ app.use("/logout", require("./routes/logout"));
 // This works like a waterfall. Everything after this line will use the JWT middleware
 app.use(verifyJWT);
 app.use("/employees", require("./routes/api/employees"));
+app.use("/users", require("./routes/api/users"));
+// app.use("/users", require("./routes/api/users"));
 
 // app.all is more for routing and will apply to all http methods at once
 app.all("*", (req, res) => {
